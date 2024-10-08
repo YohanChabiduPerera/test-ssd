@@ -67,12 +67,19 @@ export function useBackendAPI() {
       }
     },
 
-    login: async function (userDetails) {
-      try {
-        const response = await userApi.post("/login/", userDetails);
-        handleLoginResponse(response, userDetails);
-      } catch (err) {
-        handleError(err);
+    navigateToRole: function (data) {
+      switch (data.role) {
+        case "Buyer":
+          navigate("/buyer/product");
+          break;
+        case "Merchant":
+          data.storeID ? navigate("/seller") : navigate("/seller/store");
+          break;
+        case "Admin":
+          navigate("/admin");
+          break;
+        default:
+          alert("Unknown role.");
       }
     },
     
@@ -92,25 +99,17 @@ export function useBackendAPI() {
     
       setUserInLocalStorage(data);
       dispatch({ type: "SetUser", payload: [data] });
-      navigateToRole(data);
-    },    
-    
-    navigateToRole: function (data) {
-      switch (data.role) {
-        case "Buyer":
-          navigate("/buyer/product");
-          break;
-        case "Merchant":
-          data.storeID ? navigate("/seller") : navigate("/seller/store");
-          break;
-        case "Admin":
-          navigate("/admin");
-          break;
-        default:
-          alert("Unknown role.");
+      this.navigateToRole(data);
+    },
+
+    login: async function (userDetails) {
+      try {
+        const response = await userApi.post("/login/", userDetails);
+        this.handleLoginResponse(response, userDetails);
+      } catch (err) {
+        handleError(err);
       }
     },
-    
 
     getGoogleProfile: async (accessToken) => {
       try {
