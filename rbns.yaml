@@ -12,6 +12,7 @@ spec:
       labels:
         app: rbns
     spec:
+      automountServiceAccountToken: false  # Disable automounting for this pod
       containers:
         - name: payment-service
           image: imreezan/payment-service
