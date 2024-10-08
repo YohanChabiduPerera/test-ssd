@@ -56,20 +56,22 @@ export default function Store() {
 
         <div className="right-side">
           <div className="mb-3">
-            <label>Store Name</label>
+            <label htmlFor="storeName">Store Name</label>
             <input
               type="text"
               className="form-control"
+              id="storeName"
               placeholder="enter a store name"
               ref={storeName}
             />
           </div>
 
           <div className="mb-3">
-            <label>Location</label>
+            <label htmlFor="location">Location</label>
             <input
               type="text"
               className="form-control"
+              id="location"
               placeholder="enter a location"
               ref={location}
             />
