@@ -67,45 +67,29 @@ export function useBackendAPI() {
       }
     },
 
-    navigateToRole: function (data) {
-      switch (data.role) {
-        case "Buyer":
-          navigate("/buyer/product");
-          break;
-        case "Merchant":
-          data.storeID ? navigate("/seller") : navigate("/seller/store");
-          break;
-        case "Admin":
-          navigate("/admin");
-          break;
-        default:
-          alert("Unknown role.");
-      }
-    },
-    
-    handleLoginResponse: function (response, userDetails) {
-      if (!response?.data) {
-        alert("Login failed. No response from the server.");
-        return;
-      }
-    
-      const data = response.data;
-      updateAxiosCsrfToken();
-    
-      if (!data.role) {
-        alert(data.err || "User role not found in the response");
-        return;
-      }
-    
-      setUserInLocalStorage(data);
-      dispatch({ type: "SetUser", payload: [data] });
-      this.navigateToRole(data);
-    },
-
     login: async function (userDetails) {
       try {
         const response = await userApi.post("/login/", userDetails);
-        this.handleLoginResponse(response, userDetails);
+
+        if (response && response.data) {
+          const data = response.data;
+          updateAxiosCsrfToken();
+
+          if (data.role) {
+            setUserInLocalStorage(data);
+            dispatch({ type: "SetUser", payload: [data] });
+            if (data.role === "Buyer") navigate("/buyer/product");
+            else if (data.role === "Merchant")
+              data.storeID ? navigate("/seller") : navigate("/seller/store");
+            else if (data.role === "Admin") navigate("/admin");
+
+            return "Success";
+          } else {
+            alert(data.err || "User role not found in the response");
+          }
+        } else {
+          alert("Login failed. No response from the server.");
+        }
       } catch (err) {
         handleError(err);
       }
