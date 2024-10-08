@@ -79,7 +79,7 @@ export default function Register() {
       role,
     });
 
-    if (info === "Success") {
+    if (info == "Success") {
       SendEmail({
         user_name: userDetails.userName,
         role: userDetails.role,
