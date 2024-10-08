@@ -8,10 +8,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-###  Installing dependencies
+# Installing dependencies
 RUN npm install --verbose
 
-# copy local files to app folder
+# Copy local files to app folder, excluding the ones in .dockerignore
 COPY . .
 
 EXPOSE 3000

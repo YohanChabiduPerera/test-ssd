@@ -3,10 +3,10 @@ import emailjs from "emailjs-com";
 // Function to send email using emailjs
 export const SendEmail = (email) => {
   // Variable to store the message for registration
-  var message;
+  let message;
 
   // Setting the default template ID
-  var template = "template_hkvdita";
+  let template = "template_hkvdita";
 
   // Checking the role and setting the message accordingly
   if (email.role === "Buyer")

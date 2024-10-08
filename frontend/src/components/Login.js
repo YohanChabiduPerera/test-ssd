@@ -54,7 +54,7 @@ export default function Login() {
     const sanitizedEncodedInputs = sanitizeAndEncodeInputs(originalInputs);
     // console.log("Sanitized and encoded inputs:", sanitizedEncodedInputs);
 
-    var role;
+    let role;
     if (isAdmin) {
       role = "Admin";
     } else {
