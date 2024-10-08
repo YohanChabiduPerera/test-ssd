@@ -208,7 +208,7 @@ export default function ProductList() {
                     <div className="card-body">
                       <div className="row">
                         <div className="col-md-4 mb-3">
-                          <label for="validationCustom01">Product title</label>
+                          <label htmlFor="validationCustom01">Product title</label>
                           <input
                             type="text"
                             className="form-control"
@@ -220,7 +220,7 @@ export default function ProductList() {
                           />
                         </div>
                         <div className="col">
-                          <label for="validationCustom01">
+                          <label htmlFor="validationCustom01">
                             Product description
                           </label>
                           <input
@@ -236,7 +236,7 @@ export default function ProductList() {
                       </div>
                       <div className="row">
                         <div className="col">
-                          <label for="validationCustom01">Quantity</label>
+                          <label htmlFor="validationCustom01">Quantity</label>
                           <input
                             type="number"
                             className="form-control"
@@ -250,7 +250,7 @@ export default function ProductList() {
                       </div>
                       <div className="row">
                         <div className="col-md-4 mb-3">
-                          <label for="validationCustom01">Unit Price</label>
+                          <label htmlFor="validationCustom01">Unit Price</label>
                           <input
                             type="text"
                             className="form-control"
@@ -264,7 +264,7 @@ export default function ProductList() {
                           <div className="valid-feedback">Looks good!</div>
                         </div>
                         <div className="col-md-4 mb-3">
-                          <label for="validationCustom01">Discount</label>
+                          <label htmlFor="validationCustom01">Discount</label>
                           <input
                             type="text"
                             className="form-control"
