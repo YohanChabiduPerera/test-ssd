@@ -77,7 +77,7 @@ export function useBackendAPI() {
     },
     
     handleLoginResponse: function (response, userDetails) {
-      if (!response || !response.data) {
+      if (!response?.data) {
         alert("Login failed. No response from the server.");
         return;
       }
@@ -93,7 +93,7 @@ export function useBackendAPI() {
       setUserInLocalStorage(data);
       dispatch({ type: "SetUser", payload: [data] });
       navigateToRole(data);
-    },
+    },    
     
     navigateToRole: function (data) {
       switch (data.role) {
