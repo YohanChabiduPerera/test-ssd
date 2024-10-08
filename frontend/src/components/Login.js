@@ -106,10 +106,11 @@ export default function Login() {
             <h3 className="text-center mb-4">Sign In</h3>
 
             <div className="mb-3">
-              <label>Username</label>
+              <label htmlFor="validationCustom01">Username</label>
               <input
                 type="email"
                 className="form-control"
+                id="validationCustom01"
                 placeholder="example@gmail.com"
                 ref={userName}
                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
@@ -118,10 +119,11 @@ export default function Login() {
             </div>
 
             <div className="mb-3">
-              <label>Password</label>
+              <label htmlFor="validationCustom01">Password</label>
               <input
                 type="password"
                 className="form-control"
+                id="validationCustom01"
                 placeholder="password"
                 ref={password}
               />

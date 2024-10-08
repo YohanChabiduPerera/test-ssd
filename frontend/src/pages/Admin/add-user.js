@@ -58,7 +58,7 @@ export default function AddUser() {
             <div className="card-body">
               <div className="row">
                 <div className="col-md-4 mb-3">
-                  <label for="validationCustom01">User Name</label>
+                  <label htmlFor="validationCustom01">User Name</label>
                   <input
                     type="text"
                     className="form-control"
@@ -69,7 +69,7 @@ export default function AddUser() {
                   <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
-                  <label for="validationCustom01">Password</label>
+                  <label htmlFor="validationCustom01">Password</label>
                   <input
                     type="text"
                     className="form-control"
@@ -82,7 +82,7 @@ export default function AddUser() {
               </div>
               <div className="row">
                 <div className="col-md-4 mb-3">
-                  <label for="validationCustom01">Contact No</label>
+                  <label htmlFor="validationCustom01">Contact No</label>
                   <input
                     type="text"
                     className="form-control"
@@ -93,7 +93,7 @@ export default function AddUser() {
                   <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
-                  <label for="validationCustom01">Address</label>
+                  <label htmlFor="validationCustom01">Address</label>
                   <input
                     type="number"
                     className="form-control"
@@ -104,7 +104,7 @@ export default function AddUser() {
                   <div className="valid-feedback">Looks good!</div>
                 </div>
                 <div className="col">
-                  <label for="validationCustom01">Image</label>
+                  <label htmlFor="validationCustom01">Image</label>
                   <input
                     type="file"
                     className="form-control"
@@ -117,7 +117,7 @@ export default function AddUser() {
               </div>
               <div className="row">
                 <div className="col-md-4 mb-3">
-                  <label for="validationCustom01">Role</label>
+                  <label htmlFor="validationCustom01">Role</label>
                   <input
                     type="text"
                     className="form-control"

@@ -139,12 +139,13 @@ export default function Register() {
             </div>
 
             <div className="mb-3">
-              <label>Username</label>
+              <label htmlFor="validationCustom01">Username</label>
               <input
                 type="email"
                 className={`form-control ${
                   errors.userName ? "is-invalid" : ""
                 }`}
+                id="validationCustom01"
                 placeholder="example@gmail.com"
                 ref={userName}
                 required
@@ -155,12 +156,13 @@ export default function Register() {
             </div>
 
             <div className="mb-3">
-              <label>Create Password</label>
+              <label htmlFor="validationCustom01">Create Password</label>
               <input
                 type="password"
                 className={`form-control ${
                   errors.password ? "is-invalid" : ""
                 }`}
+                id="validationCustom01"
                 placeholder="password"
                 ref={password}
                 required
@@ -171,10 +173,11 @@ export default function Register() {
             </div>
 
             <div className="mb-3">
-              <label>Contact Number</label>
+              <label htmlFor="validationCustom01">Contact Number</label>
               <input
                 type="text"
                 className={`form-control ${errors.contact ? "is-invalid" : ""}`}
+                id="validationCustom01"
                 placeholder="+94 123 456 789"
                 ref={contact}
                 required
@@ -185,10 +188,11 @@ export default function Register() {
             </div>
 
             <div className="mb-3">
-              <label>Address</label>
+              <label htmlFor="validationCustom01">Address</label>
               <input
                 type="text"
                 className={`form-control ${errors.address ? "is-invalid" : ""}`}
+                id="validationCustom01"
                 placeholder="123 Main St"
                 ref={address}
                 required
