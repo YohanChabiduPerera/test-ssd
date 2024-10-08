@@ -1,17 +1,19 @@
 # Ignore node_modules
 node_modules
 
-# Ignore environment variables
+# Ignore local environment files
 .env
+.env.local
+.env.development
 
-# Ignore any logs
+# Ignore log files
 *.log
 
 # Ignore build output
 build
 dist
 
-# Ignore Dockerfile and docker-compose.yml to avoid copying them unnecessarily
+# Ignore Dockerfile and docker-compose files
 Dockerfile
 docker-compose.yml
 

@@ -3,17 +3,24 @@
 # Build react client
 FROM node:16.17.0-alpine
 
-# Working directory be app
+# Working directory
 WORKDIR /usr/src/app
 
+# Copy only package.json and package-lock.json to install dependencies
 COPY package*.json ./
 
-# Installing dependencies
+# Install dependencies
 RUN npm install --verbose
 
-# Copy local files to app folder, excluding the ones in .dockerignore
-COPY . .
+# Copy only the necessary files
+COPY public ./public
+COPY src ./src
+COPY .env ./
+
+# Optionally copy any other required files
+COPY config ./config
+COPY .env.production ./
 
 EXPOSE 3000
 
-CMD ["npm","start"]
+CMD ["npm", "start"]
