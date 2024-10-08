@@ -25,9 +25,11 @@ spec:
           resources:
             limits:
               memory: "512Mi"
+              cpu: "500m"  # Set CPU limit
               ephemeral-storage: "1Gi"  # Storage limit
             requests:
               memory: "256Mi"
+              cpu: "250m"  # Set CPU request
               ephemeral-storage: "500Mi"  # Requested storage
         - name: user-service
           image: imreezan/user-service
@@ -40,9 +42,11 @@ spec:
           resources:
             limits:
               memory: "512Mi"
+              cpu: "500m"  # Set CPU limit
               ephemeral-storage: "1Gi"  # Storage limit
             requests:
               memory: "256Mi"
+              cpu: "250m"  # Set CPU request
               ephemeral-storage: "500Mi"  # Requested storage
         - name: product-service
           image: imreezan/product-service
@@ -55,9 +59,11 @@ spec:
           resources:
             limits:
               memory: "512Mi"
+              cpu: "500m"  # Set CPU limit
               ephemeral-storage: "1Gi"  # Storage limit
             requests:
               memory: "256Mi"
+              cpu: "250m"  # Set CPU request
               ephemeral-storage: "500Mi"  # Requested storage
         - name: store-service
           image: imreezan/store-service
@@ -70,9 +76,11 @@ spec:
           resources:
             limits:
               memory: "512Mi"
+              cpu: "500m"  # Set CPU limit
               ephemeral-storage: "1Gi"  # Storage limit
             requests:
               memory: "256Mi"
+              cpu: "250m"  # Set CPU request
               ephemeral-storage: "500Mi"  # Requested storage
         - name: rbns-client
           image: imreezan/rbns-client
@@ -85,9 +93,11 @@ spec:
           resources:
             limits:
               memory: "512Mi"
+              cpu: "500m"  # Set CPU limit
               ephemeral-storage: "1Gi"  # Storage limit
             requests:
               memory: "256Mi"
+              cpu: "250m"  # Set CPU request
               ephemeral-storage: "500Mi"  # Requested storage
           
 ---
