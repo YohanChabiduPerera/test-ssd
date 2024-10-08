@@ -1,6 +1,7 @@
 import List from "@mui/material/List";
 import { useState } from "react";
 import { IoIosSend } from "react-icons/io";
+import PropTypes from "prop-types";
 import ContactListItem from "./ContactListItem";
 import styles from "./ContactList.module.css";
 import { SendReferralMail } from "../utils/sendReferralMail";
@@ -95,3 +96,11 @@ export default function ContactList({
     </List>
   );
 }
+
+// Define prop types
+ContactList.propTypes = {
+  contactList: PropTypes.array.isRequired,
+  fetchingContactsUpdateStatus: PropTypes.string.isRequired, 
+  item: PropTypes.object.isRequired, 
+  handleClose: PropTypes.func.isRequired, 
+};
