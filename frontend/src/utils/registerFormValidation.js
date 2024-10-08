@@ -32,7 +32,9 @@ const errorMessages = {
   invalidPassword:
     "Password must be 6-20 characters, include at least one uppercase letter, one number, and one special character.",
   invalidContact: "Contact number must be exactly 10 digits.",
-  invalidAddress: "Address must meet the required criteria.",
+  invalidAddressLength: "Address must be at least 10 characters long.",
+  invalidAddressReq: "Address must contain both letters and numbers.",
+  invalidAddressChar: "Address contains invalid special characters.",
 };
 
 // Form validation logic
@@ -57,11 +59,11 @@ export const validateForm = (inputs) => {
 
   const addressValue = inputs.address.trim();
   if (addressValue.length < 10) {
-    errors.address = errorMessages.invalidAddress;
+    errors.address = errorMessages.invalidAddressLength;
   } else if (!/\d/.test(addressValue) || !/[a-zA-Z]/.test(addressValue)) {
-    errors.address = errorMessages.invalidAddress;
+    errors.address = errorMessages.invalidAddressReq;
   } else if (/[^a-zA-Z0-9\s,-]/.test(addressValue)) {
-    errors.address = errorMessages.invalidAddress;
+    errors.address = errorMessages.invalidAddressChar;
   }
 
   return errors;
