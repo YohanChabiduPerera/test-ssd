@@ -26,12 +26,21 @@ export const sanitizeAndEncodeInputs = (inputs) => {
   return encodedInputs;
 };
 
+// Define validation messages separately
+const errorMessages = {
+  invalidEmail: "Invalid email format. Please enter a valid email.",
+  invalidPassword:
+    "Password must be 6-20 characters, include at least one uppercase letter, one number, and one special character.",
+  invalidContact: "Contact number must be exactly 10 digits.",
+  invalidAddress: "Address must meet the required criteria.",
+};
+
 // Form validation logic
 export const validateForm = (inputs) => {
   const errors = {};
 
   if (!inputs.userName.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/)) {
-    errors.userName = "Invalid email format. Please enter a valid email.";
+    errors.userName = errorMessages.invalidEmail;
   }
 
   if (
@@ -39,22 +48,22 @@ export const validateForm = (inputs) => {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,20}$/
     )
   ) {
-    errors.password =
-      "Password must be 6-20 characters, include at least one uppercase letter, one number, and one special character.";
+    errors.password = errorMessages.invalidPassword;
   }
 
   if (!inputs.contact.match(/^\d{10}$/)) {
-    errors.contact = "Contact number must be exactly 10 digits.";
+    errors.contact = errorMessages.invalidContact;
   }
 
   const addressValue = inputs.address.trim();
   if (addressValue.length < 10) {
-    errors.address = "Address must be at least 10 characters long.";
+    errors.address = errorMessages.invalidAddress;
   } else if (!/\d/.test(addressValue) || !/[a-zA-Z]/.test(addressValue)) {
-    errors.address = "Address must contain both letters and numbers.";
+    errors.address = errorMessages.invalidAddress;
   } else if (/[^a-zA-Z0-9\s,-]/.test(addressValue)) {
-    errors.address = "Address contains invalid special characters.";
+    errors.address = errorMessages.invalidAddress;
   }
 
   return errors;
 };
+
