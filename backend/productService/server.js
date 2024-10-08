@@ -1,0 +1,175 @@
+// Import necessary packages
+const https = require("https"); // Import the https module
+const fs = require("fs"); // Import the File System module
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config(); // Load environment variables from .env file
+const cookieParser = require("cookie-parser"); // Add this line
+const helmet = require("helmet"); // Import helmet for security headers
+const permissionsPolicy = require("permissions-policy"); // Import permissions-policy middleware
+
+// Create an Express app
+const app = express();
+app.use(cookieParser()); // Add this line to parse cookies
+app.use(express.json({ limit: "100mb" }));
+app.use(express.urlencoded({ limit: "100mb", extended: true }));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests from localhost domains
+      if (origin === undefined || origin.includes("localhost")) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow credentials (cookies, etc.)
+  })
+);
+
+app.disable("x-powered-by");
+
+// Security headers using Helmet with a comprehensive set of protections
+app.use(
+  helmet({
+    frameguard: { action: "SAMEORIGIN" }, // Protect against clickjacking
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://trusted-scripts.com",
+          "https://www.paypal.com",
+          "https://accounts.google.com",
+        ],
+        styleSrc: [
+          "'self'",
+          "https://cdn.jsdelivr.net",
+          "'sha256-<hashed-style-content>'", // Replace with actual hash
+        ],
+        frameSrc: [
+          "'self'",
+          "https://www.paypal.com",
+          "https://cardinalcommerce.com",
+        ],
+        connectSrc: [
+          "'self'",
+          "http://localhost:3000",
+          "https://www.sandbox.paypal.com",
+          "https://www.googleapis.com",
+          "https://people.googleapis.com",
+        ],
+        frameAncestors: ["'self'"], // Prevent embedding from external domains
+        reportTo: "/csp-violation-report-endpoint", // CSP violation reporting
+      },
+    },
+    referrerPolicy: { policy: "no-referrer" }, // Set Referrer-Policy header
+    noSniff: true, // Disable MIME type sniffing
+    ieNoOpen: true, // Sets X-Download-Options for IE8+ to prevent file downloads
+    hsts: {
+      maxAge: 31536000, // Enforce HTTPS for 1 year
+      includeSubDomains: true, // Apply HSTS to all subdomains
+      preload: true, // Allow preload in the HSTS preload list
+    },
+    xssFilter: true, // Set X-XSS-Protection header to prevent reflected XSS
+    dnsPrefetchControl: { allow: false }, // Prevent DNS prefetching
+    permittedCrossDomainPolicies: { policy: "none" }, // Prevent Adobe Flash/Acrobat cross-domain requests
+    expectCt: {
+      maxAge: 86400, // Enforce Certificate Transparency for 1 day
+      enforce: true,
+    },
+  })
+);
+
+// Security headers using Helmet with a comprehensive set of protections
+app.use(
+  helmet({
+    frameguard: { action: "SAMEORIGIN" }, // Protect against clickjacking
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "https://trusted-scripts.com",
+          "https://www.paypal.com",
+          "https://accounts.google.com",
+        ],
+        styleSrc: [
+          "'self'",
+          "https://cdn.jsdelivr.net",
+          "'sha256-<hashed-style-content>'",
+        ],
+        frameSrc: [
+          "'self'",
+          "https://www.paypal.com",
+          "https://cardinalcommerce.com",
+        ],
+        connectSrc: [
+          "'self'",
+          "http://localhost:3000",
+          "https://www.sandbox.paypal.com",
+          "https://www.googleapis.com",
+          "https://people.googleapis.com",
+        ],
+        frameAncestors: ["'self'"],
+        reportTo: "/csp-violation-report-endpoint",
+      },
+    },
+    referrerPolicy: { policy: "no-referrer" },
+    noSniff: true,
+    ieNoOpen: true,
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
+    },
+    xssFilter: true,
+    dnsPrefetchControl: { allow: false },
+    permittedCrossDomainPolicies: { policy: "none" },
+    expectCt: {
+      maxAge: 86400,
+      enforce: true,
+    },
+  })
+);
+
+// Permissions Policy middleware to restrict certain browser features
+app.use(
+  permissionsPolicy({
+    features: {
+      geolocation: ["self"],
+      camera: ["none"],
+      microphone: ["none"],
+      fullscreen: ["self"],
+    },
+  })
+);
+
+const PORT = process.env.PORT; // Get port number from environment variables
+const URI = process.env.URI; // Get MongoDB URI from environment variables
+// Reading SSL certificate and private key generated by mkcert
+const options = {
+  key: fs.readFileSync("../certificate/localhost-key.pem"), // Private key
+  cert: fs.readFileSync("../certificate/fullcert.pem"), // Public certificate
+  // Optionally add the certificate authority (CA) chain if necessary
+  ca: fs.readFileSync("../certificate/rootCA.pem"), // CA file if needed (mkcert root CA)
+};
+
+// Connecting to the MongoDB database and starting the https server
+mongoose
+  .connect(URI, { useUnifiedTopology: true })
+  .then(() => {
+    console.log("Connection to MongoDB successful");
+
+    // Creating https server with SSL certificate
+    https.createServer(options, app).listen(PORT, () => {
+      console.log(`Secure server is running on https://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+const itemRouter = require("./routes/item"); // Import router for item-related endpoints
+app.use("/api/product", itemRouter); // Mount itemRouter at /api/product endpoint
