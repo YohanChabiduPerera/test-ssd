@@ -70,30 +70,47 @@ export function useBackendAPI() {
     login: async function (userDetails) {
       try {
         const response = await userApi.post("/login/", userDetails);
-
-        if (response && response.data) {
-          const data = response.data;
-          updateAxiosCsrfToken();
-
-          if (data.role) {
-            setUserInLocalStorage(data);
-            dispatch({ type: "SetUser", payload: [data] });
-            if (data.role === "Buyer") navigate("/buyer/product");
-            else if (data.role === "Merchant")
-              data.storeID ? navigate("/seller") : navigate("/seller/store");
-            else if (data.role === "Admin") navigate("/admin");
-
-            return "Success";
-          } else {
-            alert(data.err || "User role not found in the response");
-          }
-        } else {
-          alert("Login failed. No response from the server.");
-        }
+        handleLoginResponse(response, userDetails);
       } catch (err) {
         handleError(err);
       }
     },
+    
+    handleLoginResponse: function (response, userDetails) {
+      if (!response || !response.data) {
+        alert("Login failed. No response from the server.");
+        return;
+      }
+    
+      const data = response.data;
+      updateAxiosCsrfToken();
+    
+      if (!data.role) {
+        alert(data.err || "User role not found in the response");
+        return;
+      }
+    
+      setUserInLocalStorage(data);
+      dispatch({ type: "SetUser", payload: [data] });
+      navigateToRole(data);
+    },
+    
+    navigateToRole: function (data) {
+      switch (data.role) {
+        case "Buyer":
+          navigate("/buyer/product");
+          break;
+        case "Merchant":
+          data.storeID ? navigate("/seller") : navigate("/seller/store");
+          break;
+        case "Admin":
+          navigate("/admin");
+          break;
+        default:
+          alert("Unknown role.");
+      }
+    },
+    
 
     getGoogleProfile: async (accessToken) => {
       try {

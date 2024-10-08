@@ -1,7 +1,7 @@
 import List from "@mui/material/List";
 import { useState } from "react";
 import { IoIosSend } from "react-icons/io";
-import ContactListItem from "./ContactListItem"; // Import the new component
+import ContactListItem from "./ContactListItem";
 import styles from "./ContactList.module.css";
 import { SendReferralMail } from "../utils/sendReferralMail";
 import { UseUserContext } from "../context/useUserContext";
@@ -15,7 +15,8 @@ export default function ContactList({
   const [receipientList, setReceipientList] = useState([]);
   const { user1 } = UseUserContext();
 
-  const handleToggle = (value) => () => {
+  // Toggle contact selection
+  const toggleContact = (value) => {
     setReceipientList((list) =>
       list.includes(value)
         ? list.filter((item) => item !== value)
@@ -23,9 +24,9 @@ export default function ContactList({
     );
   };
 
-  const handleSendMail = async () => {
-    // Implement send mail logic
-    const result_test = await SendReferralMail({
+  // Send referral mail
+  const sendMail = async () => {
+    const result = await SendReferralMail({
       to_email: receipientList.join(", "),
       sender_email: user1[0].userName,
       store_name: item.storeName,
@@ -33,12 +34,29 @@ export default function ContactList({
       product_image_url: item.image,
     });
 
-    if (result_test.toLowerCase() === "ok") {
+    handleMailResult(result);
+  };
+
+  // Handle mail sending result
+  const handleMailResult = (result) => {
+    if (result.toLowerCase() === "ok") {
       alert("Mail sent successfully");
-      handleClose(); // Close the modal after sending mail
+      handleClose();
     } else {
-      alert(result_test);
+      alert(result);
     }
+  };
+
+  // Render the list of contacts
+  const renderContactList = () => {
+    return contactList.map((value) => (
+      <ContactListItem
+        key={value}
+        value={value}
+        checked={receipientList}
+        handleToggle={toggleContact}
+      />
+    ));
   };
 
   return (
@@ -64,19 +82,12 @@ export default function ContactList({
                 <IoIosSend
                   title="Send Mail"
                   size={24}
-                  onClick={handleSendMail}
+                  onClick={sendMail}
                 />
               </div>
             )}
           </div>
-          {contactList.map((value) => (
-            <ContactListItem
-              key={value}
-              value={value}
-              checked={receipientList}
-              handleToggle={handleToggle}
-            />
-          ))}
+          {renderContactList()}
         </>
       ) : (
         <p>{fetchingContactsUpdateStatus}</p>
